@@ -17459,24 +17459,24 @@ exports.push([module.i, "\n.pulldown-wrapper[data-v-2f7dee3b] {\n  top: -49.9815
 	      this.pullDownInitTop = -40;
 	    },
 		mounted(){
-			var _this = this;
+			console.log("111");
 			
 			setTimeout(() => {
-				_this._setHeight();
-				_this.bScroll = new __WEBPACK_IMPORTED_MODULE_0_better_scroll__["a" /* default */](".list-wrapper",{
+				this._setHeight();
+				this.bScroll = new __WEBPACK_IMPORTED_MODULE_0_better_scroll__["a" /* default */](".list-wrapper",{
 					scrollY : true,
 					scrollX : false,
 					pullDownRefresh : true,
 					pullUpLoad : true,
 			        click:true
       			});
-				_this.bScroll.on("pullingDown",()=>{
-					_this.beforePullDown = false;
-					_this.isPullingDown = true;
+				this.bScroll.on("pullingDown",()=>{
+					this.beforePullDown = false;
+					this.isPullingDown = true;
 
 					setTimeout(()=>{
-						_this.bScroll.finishPullDown();
-						_this.datas.unshift({
+						this.bScroll.finishPullDown();
+						this.datas.unshift({
 							"title" : "新的数据"+new Date().valueOf(),
 							"pic_url" : "http://www.raowensheng.com/test/images/webwxgetmsgimg_06.jpg",
 							"comments" : "2.2万",
@@ -17488,11 +17488,11 @@ exports.push([module.i, "\n.pulldown-wrapper[data-v-2f7dee3b] {\n  top: -49.9815
 					},3500)
 
 				});
-				_this.bScroll.on("pullingUp",()=>{
+				this.bScroll.on("pullingUp",()=>{
 					//_this.isPullUpLoad = true;
 					setTimeout(()=>{
-						_this.bScroll.finishPullUp();
-							_this.datas.push({
+						this.bScroll.finishPullUp();
+							this.datas.push({
 							"title" : "新的数据"+new Date().valueOf(),
 							"pic_url" : "http://www.raowensheng.com/test/images/webwxgetmsgimg_06.jpg",
 							"comments" : "2.2万",
@@ -17533,17 +17533,17 @@ exports.push([module.i, "\n.pulldown-wrapper[data-v-2f7dee3b] {\n  top: -49.9815
 					
 
 				});
-				_this.bScroll.on("scrollEnd",(pos)=>{
+				this.bScroll.on("scrollEnd",(pos)=>{
 					setTimeout(()=>{
-						_this.beforePullDown = true
-						_this.isPullingDown =false;
-			            _this.itop = -50;
+						this.beforePullDown = true
+						this.isPullingDown =false;
+			            this.itop = -50;
 					},20)
 						
 				});
-				_this.bScroll.on("scroll",(pos)=>{
-			            _this.bubbleY = Math.max(0, pos.y + _this.pullDownInitTop)
-			            _this.itop = Math.min(pos.y + _this.pullDownInitTop, 10)
+				this.bScroll.on("scroll",(pos)=>{
+			            this.bubbleY = Math.max(0, pos.y + this.pullDownInitTop)
+			            this.itop = Math.min(pos.y + this.pullDownInitTop, 10)
 				});
 
 				
@@ -17561,6 +17561,10 @@ exports.push([module.i, "\n.pulldown-wrapper[data-v-2f7dee3b] {\n  top: -49.9815
 			del(index){
 				this.datas.splice(index,1)
 			}
+		},
+		beforeUpdate(){
+		},
+		updated(){
 		},
 		watch : {
 			datas : {

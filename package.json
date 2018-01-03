@@ -16,6 +16,7 @@
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^13.5.0",
     "vue-router": "^3.0.1",
+    "vue-scroller": "^2.2.4",
     "vue-template-compiler": "^2.5.9",
     "webpack": "^3.9.0"
   }
