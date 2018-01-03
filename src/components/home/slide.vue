@@ -33,7 +33,7 @@
 						"title" : "布冯荣膺意甲年度最佳球员",
 						"pic_url" : "http://raowensheng.com/test/images/f20ccb927d478ad_size86_w950_h633.jpg"
 					}
-				],
+				]
 				
 			}
 		},
@@ -48,9 +48,9 @@
 			}
 		},
 		mounted() {
-			var _this = this;
-			_this.count = _this.slideArr.length;
-			_this._setSlideWidth();
+
+			this.count = this.slideArr.length;
+			this._setSlideWidth();
 			setTimeout(() => {
 				var bScroll = new BScroll(".slide",{
 					scrollY : false,
@@ -64,7 +64,7 @@
 			        click:true
       			});
 				bScroll.on("scrollEnd",function(o){
-					_this.current = bScroll.getCurrentPage().pageX;
+					this.current = bScroll.getCurrentPage().pageX;
 		        })
 
 				

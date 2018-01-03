@@ -1,17 +1,18 @@
 <template>
 	<div class="list-wrapper" id="list-wrapper">
-		
-		<div class="content-wrapper">
+
+		<scroller :on-refresh="refresh" :on-infinite="infinite">
+
 			<ul class="list" id="news-list">
-				<li class="clearfix" v-for="(d,index) in datas">
+				<li class="clearfix" v-for="(d,index) in items">
 					<div class="img">
 						<a href="javascript:void(0)">
 							<img :src="d.pic_url" />
 						</a>
 					</div>
 					<div class="title">
-						<p><a href="javascript:void(0)" class="txt">{{d.title}}</a></p>
-
+						<p class="txt">{{d.title}}</p>
+		
 						<div class="box1">
 							<span class="settop">{{d.status}}</span>
 							<span class="tag">{{d.from}}</span>
@@ -22,230 +23,79 @@
 					</div>
 				</li>
 			</ul>
-			<div class="pullup-wrapper">
-				<div class="loading upload-loading" v-if="isPullUpLoad"><img src="../../assets/loading.gif" /></div>
-			</div>
-		</div>
-		
-		
-		<div class="pulldown-wrapper" :style="{top:itop+'px'}">
-			<div class="before-trigger" v-if="beforePullDown">
-				<bubble :y="bubbleY"></bubble>
-			</div>
-			<div v-else>
-				<div class="loading " v-if="isPullingDown"><img src="../../assets/loading.gif" /></div>
-			</div>
-		</div>
+
+	    </scroller>
 
 		
 	</div>
 </template>
 <script>
-	import BScroll from 'better-scroll';
-	import Bubble from './bubble.vue'
-	export default {
-		data(){
-			return {
-				isPullingDown : false,
-				pullDownRefresh : true,
-				beforePullDown : true,
-				isPullUpLoad : true,
-				bubbleY: 0,
-				itop : -50,
-				datas : [
-					{
-						"title" : "习近平向埃及总统塞西致慰问电",
+	
+  import Vue from 'vue'
+  import VueScroller from 'vue-scroller'
+  Vue.use(VueScroller)
+  export default {
+    data() {
+      return {
+        items: []
+      }
+    },
+    
+    mounted() {
+    	for (var i = 1; i <= 20; i++) {
+        this.items.push({
+						"title" : "习近平向埃及总统塞西致慰问电"+i,
 						"pic_url" : "http://www.raowensheng.com/test/images/webwxgetmsgimg_03.jpg",
 						"comments" : "5.2万",
 						"status" : "置顶",
 						"from" : "",
 						"date" : ""
-					},
-					{
-						"title" : "直播|宁波爆炸:附近多间房屋倒塌 店铺大门被炸开",
-						"pic_url" : "http://www.raowensheng.com/test/images/webwxgetmsgimg_06.jpg",
-						"comments" : "2.2万",
-						"status" : "热",
-						"from" : "央视新闻",
-						"date" : "10:28"
-					},
-					{
-						"title" : "习近平向埃及总统塞西致慰问电",
+					})
+      }
+      this.top = 1
+      this.bottom = 20
+    },
+    methods: {
+      refresh (done) {
+        setTimeout(() => {
+          var start = this.top - 1
+          for (var i = start; i > start - 10; i--) {
+            this.items.splice(0, 0, {
+						"title" : "习近平向埃及总统塞西致慰问电"+i+new Date().valueOf(),
 						"pic_url" : "http://www.raowensheng.com/test/images/webwxgetmsgimg_03.jpg",
 						"comments" : "5.2万",
 						"status" : "置顶",
 						"from" : "",
 						"date" : ""
-					},
-					{
-						"title" : "直播|宁波爆炸:附近多间房屋倒塌 店铺大门被炸开",
-						"pic_url" : "http://www.raowensheng.com/test/images/webwxgetmsgimg_06.jpg",
-						"comments" : "2.2万",
-						"status" : "热",
-						"from" : "央视新闻",
-						"date" : "10:28"
-					},
-					{
-						"title" : "习近平向埃及总统塞西致慰问电",
+					})
+          }
+          this.top = this.top - 10
+          done()
+        }, 1500)
+      },
+      infinite (done) {
+        setTimeout(() => {
+          var start = this.bottom + 1
+          for (var i = start; i < start + 10; i++) {
+            this.items.push({
+						"title" : "习近平向埃及总统塞西致慰问电"+i+new Date().valueOf(),
 						"pic_url" : "http://www.raowensheng.com/test/images/webwxgetmsgimg_03.jpg",
 						"comments" : "5.2万",
 						"status" : "置顶",
 						"from" : "",
 						"date" : ""
-					},
-					{
-						"title" : "直播|宁波爆炸:附近多间房屋倒塌 店铺大门被炸开",
-						"pic_url" : "http://www.raowensheng.com/test/images/webwxgetmsgimg_06.jpg",
-						"comments" : "2.2万",
-						"status" : "热",
-						"from" : "央视新闻",
-						"date" : "10:28"
-					},
-					{
-						"title" : "习近平向埃及总统塞西致慰问电",
-						"pic_url" : "http://www.raowensheng.com/test/images/webwxgetmsgimg_03.jpg",
-						"comments" : "5.2万",
-						"status" : "置顶",
-						"from" : "",
-						"date" : ""
-					},
-					{
-						"title" : "直播|宁波爆炸:附近多间房屋倒塌 店铺大门被炸开",
-						"pic_url" : "http://www.raowensheng.com/test/images/webwxgetmsgimg_06.jpg",
-						"comments" : "2.2万",
-						"status" : "热",
-						"from" : "央视新闻",
-						"date" : "10:28"
-					}
-				]
-			}
-		},
-		created() {
-	      this.pullDownInitTop = -40;
-	    },
-		mounted(){
-
-			
-			setTimeout(() => {
-				this._setHeight();
-				this.bScroll = new BScroll(".list-wrapper",{
-					scrollY : true,
-					scrollX : false,
-					pullDownRefresh : true,
-					pullUpLoad : true,
-			        click:true
-      			});
-				this.bScroll.on("pullingDown",()=>{
-					this.beforePullDown = false;
-					this.isPullingDown = true;
-
-					setTimeout(()=>{
-						this.bScroll.finishPullDown();
-						this.datas.unshift({
-							"title" : "新的数据"+new Date().valueOf(),
-							"pic_url" : "http://www.raowensheng.com/test/images/webwxgetmsgimg_06.jpg",
-							"comments" : "2.2万",
-							"status" : "热",
-							"from" : "央视新闻",
-							"date" : "10:28"
-						})
-
-					},3500)
-
-				});
-				this.bScroll.on("pullingUp",()=>{
-					//_this.isPullUpLoad = true;
-					setTimeout(()=>{
-						this.bScroll.finishPullUp();
-							this.datas.push({
-							"title" : "新的数据"+new Date().valueOf(),
-							"pic_url" : "http://www.raowensheng.com/test/images/webwxgetmsgimg_06.jpg",
-							"comments" : "2.2万",
-							"status" : "热",
-							"from" : "央视新闻",
-							"date" : "10:28"
-						},{
-							"title" : "新的数据"+new Date().valueOf(),
-							"pic_url" : "http://www.raowensheng.com/test/images/webwxgetmsgimg_06.jpg",
-							"comments" : "2.2万",
-							"status" : "热",
-							"from" : "央视新闻",
-							"date" : "10:28"
-						},{
-							"title" : "新的数据"+new Date().valueOf(),
-							"pic_url" : "http://www.raowensheng.com/test/images/webwxgetmsgimg_06.jpg",
-							"comments" : "2.2万",
-							"status" : "热",
-							"from" : "央视新闻",
-							"date" : "10:28"
-						},{
-							"title" : "新的数据"+new Date().valueOf(),
-							"pic_url" : "http://www.raowensheng.com/test/images/webwxgetmsgimg_06.jpg",
-							"comments" : "2.2万",
-							"status" : "热",
-							"from" : "央视新闻",
-							"date" : "10:28"
-						},{
-							"title" : "新的数据"+new Date().valueOf(),
-							"pic_url" : "http://www.raowensheng.com/test/images/webwxgetmsgimg_06.jpg",
-							"comments" : "2.2万",
-							"status" : "热",
-							"from" : "央视新闻",
-							"date" : "10:28"
-						})
-
-					},3500)
-					
-
-				});
-				this.bScroll.on("scrollEnd",(pos)=>{
-					setTimeout(()=>{
-						this.beforePullDown = true
-						this.isPullingDown =false;
-			            this.itop = -50;
-					},20)
-						
-				});
-				this.bScroll.on("scroll",(pos)=>{
-			            this.bubbleY = Math.max(0, pos.y + this.pullDownInitTop)
-			            this.itop = Math.min(pos.y + this.pullDownInitTop, 10)
-				});
-
-				
-			},220);
-
-		},
-		methods : {
-			_setHeight(){
-				var listWrapper = document.querySelector("#list-wrapper"),
-					clientHeight = document.documentElement.clientHeight,
-					itop = listWrapper.offsetTop,
-					navHeight = document.querySelector("#nav-box").offsetHeight;
-				listWrapper.style.height = (clientHeight - itop - navHeight)+"px";
-			},
-			del(index){
-				this.datas.splice(index,1)
-			}
-		},
-		beforeUpdate(){
-		},
-		updated(){
-		},
-		watch : {
-			datas : {
-				handler(curVal,oldVal){
-					var _this = this;
-					setTimeout(()=>{
-						_this.bScroll.refresh();
-					},30)
-					
-				}
-			}
-		},
-		components : {
-			Bubble
+					})
+          }
+          this.bottom = this.bottom + 10
+          done()
+        }, 1500)
+      },
+      del(index){
+			this.items.splice(index,1)
 		}
-	}
+    }
+  }
+
 </script>
 
 <style lang="scss" scoped>
@@ -261,7 +111,7 @@
 		.img{ width:27.8125%;  }
 		.title{ 
 			width:72.84375%;margin-left:4.53125%;position:relative;
-			a.txt{  color:#98989a;font-size:1.6rem;  letter-spacing: .1rem;line-height: 1.3 }
+			p.txt{  color:#98989a;font-size:1.6rem;  letter-spacing: .1rem;line-height: 1.3 }
 			.comments{ position:absolute;right:0;bottom:0;color:#545456;     font-size: 1.2rem; }
 		}
 		.box1{  position:absolute;bottom:0;left:0;width:55%;  }

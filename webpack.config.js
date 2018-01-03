@@ -1,7 +1,6 @@
 var webpack = require("webpack");
 
 module.exports = {
-
 	entry : {
 		index:__dirname+"/src/index.js"
 	},
@@ -10,15 +9,30 @@ module.exports = {
 		filename: 'bundle.js'
 	},
 	module : {
-		loaders : [
+		rules : [
 			{
 				test: /\.vue$/,
-				loader: 'vue-loader'
+				use: 'vue-loader'
 			},
 			{
 	　　　　　　test: /\.(png|jpg|gif)$/,
-	　　　　　　loader: 'url-loader?limit=1024&name=images/[hash:8].[name].[ext]'
-	　　　　}
+				use : {
+					loader :"url-loader",
+					options : {
+						limit : 1024,
+						name : "images/[hash:8].[name].[ext]"
+					}
+				}
+	　　　　},
+			{
+				test : /\.js$/,
+				use : {
+					loader : "babel-loader",
+					options : {
+						presets : ["es2015"]
+					}
+				}
+			}
 		]
 	},
 	resolve : {

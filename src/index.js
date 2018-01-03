@@ -9,6 +9,8 @@ import imenu from './components/imenu.vue';
 
 Vue.use(VueRouter);
 
+
+
 var router = new VueRouter({
 		routes: [
 		    {
@@ -41,9 +43,9 @@ var router = new VueRouter({
 window.onload = function(){
 	new Vue({
 		el : "#app",
-		router,
+		router : router,
 		components : {
-			imenu
+			imenu : imenu
 		}
 	});
 }
